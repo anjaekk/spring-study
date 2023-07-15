@@ -2,6 +2,7 @@ package oop.core;
 
 import oop.core.discount.DiscountPolicy;
 import oop.core.discount.FixDiscountPolicy;
+import oop.core.discount.RateDiscountPolicy;
 import oop.core.member.MemberRepository;
 import oop.core.member.MemberService;
 import oop.core.member.MemberServiceImpl;
@@ -24,7 +25,7 @@ public class AppConfig {
     }
 
     public DiscountPolicy discountPolicy() {
-        return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
 
 }
