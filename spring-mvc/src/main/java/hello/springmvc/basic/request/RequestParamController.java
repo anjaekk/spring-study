@@ -1,9 +1,11 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -75,6 +77,30 @@ public class RequestParamController {
     @RequestMapping("/request-param-map")
     public String requestParamMap(@RequestParam Map<String, Object> paramMap) {
         log.info("name={}, age={}", paramMap.get("username"), paramMap.get("age"));
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    // ModelAttribute를 사용하여 HelloData 객체의 프로퍼티를 찾고 setter 호출
+    public String modelAttributeV1(@ModelAttribute HelloData helloData) {
+        // 파라미터로 받았을 때 적용해야하는 코드
+//        HelloData helloData = new HelloData();
+//        helloData.setUsername(username);
+//        helloData.setAge(age);
+
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+
+        log.info("helloData={}", helloData); // ToString으로 이렇게 해도 잘 나옴
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(HelloData helloData) { // ModelAttribute 생략 가능(단순 타입은 RequestParam, 그외 Modelattribute)
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+
+        log.info("helloData={}", helloData);
         return "ok";
     }
 }
